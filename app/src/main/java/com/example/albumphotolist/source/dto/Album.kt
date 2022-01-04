@@ -1,4 +1,4 @@
-package com.example.albumphotolist
+package com.example.albumphotolist.source.dto
 
 import com.google.gson.annotations.SerializedName
 
