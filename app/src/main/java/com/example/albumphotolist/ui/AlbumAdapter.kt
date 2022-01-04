@@ -15,7 +15,7 @@ import com.example.albumphotolist.R
 import com.example.albumphotolist.databinding.ItemAlbumBinding
 import com.example.albumphotolist.source.dto.Album
 
-class AlbumAdapter(private val albums: List<Album>, val contextActivity: Context) :
+class AlbumAdapter(private val albums: List<Album>, private val contextActivity: Context) :
     RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
@@ -41,7 +41,7 @@ class AlbumAdapter(private val albums: List<Album>, val contextActivity: Context
             binding.albumId.text = album.id.toString()
             binding.albumTitle.text = album.title
             itemView.setOnClickListener{
-                val value = album.userId.toString()
+                val value =  album.id.toString()
                 context.startActivity(Intent(context,PhotoActivity::class.java).putExtra("idAlbum",value))
             }
         }

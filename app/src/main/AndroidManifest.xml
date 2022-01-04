@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AlbumPhotoList">
         <activity
+            android:name=".ui.PhotoDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.PhotoActivity"
             android:exported="false" />
         <activity

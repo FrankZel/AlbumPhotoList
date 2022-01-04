@@ -14,4 +14,7 @@ interface APIService {
     @GET("albums/{id}/photos")
     fun getPhotosByAlbum(@Path("id") albumId : String?): Call<List<Photo>>
 
+    @GET("photos/{id}")
+    fun getPhotos(@Path("id") photoId : String?): Call<Photo>
+
 }
