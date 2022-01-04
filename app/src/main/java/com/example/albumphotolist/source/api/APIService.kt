@@ -4,13 +4,14 @@ import com.example.albumphotolist.source.dto.Photo
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Url
 
 interface APIService {
     @GET("albums")
-    suspend fun getAlbums(): List<Album>
+    fun getAlbums(): Call<List<Album>>
 
-    @GET
-    suspend fun getPhotos(@Url url: String): Response<List<Photo>>
+    @GET("albums/{id}/photos")
+    fun getPhotosByAlbum(@Path("id") albumId : String?): Call<List<Photo>>
 
 }
