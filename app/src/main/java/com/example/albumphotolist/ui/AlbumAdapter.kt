@@ -32,7 +32,6 @@ class AlbumAdapter(private val albums: List<Album>, private val contextActivity:
 
     override fun getItemCount() = albums.size
 
-
     class AlbumViewHolder(view: View, private val context: Context):
         RecyclerView.ViewHolder(view) {
         private val binding = ItemAlbumBinding.bind(view)
@@ -42,7 +41,7 @@ class AlbumAdapter(private val albums: List<Album>, private val contextActivity:
             binding.albumTitle.text = album.title
             itemView.setOnClickListener{
                 val value =  album.id.toString()
-                context.startActivity(Intent(context,PhotoActivity::class.java).putExtra("idAlbum",value))
+                context.startActivity(Intent(context,PhotoDetailActivity::class.java).putExtra("idAlbum",value))
             }
         }
 

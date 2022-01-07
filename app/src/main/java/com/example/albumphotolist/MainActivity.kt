@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
                         call: Call<List<Album>>,
                         response: Response<List<Album>>
                     ) {
-
                         response.body()?.let { _albums.addAll(it) }
                         adapter = AlbumAdapter(_albums, context)
                         binding.recyclerViewMain.adapter = adapter

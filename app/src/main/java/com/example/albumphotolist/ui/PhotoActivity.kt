@@ -11,25 +11,24 @@ import kotlinx.coroutines.launch
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.albumphotolist.databinding.ItemPhotoBinding
 import com.example.albumphotolist.source.dto.Album
+import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Response
 
 
 class PhotoActivity : AppCompatActivity() {
 
-    lateinit var adapter: PhotoAdapter
     private val _photos = mutableListOf<Photo>()
-    private lateinit var binding: ActivityPhotoBinding
+    private lateinit var binding: ItemPhotoBinding
     private val context : Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPhotoBinding.inflate(layoutInflater)
+        binding = ItemPhotoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        adapter = PhotoAdapter(emptyList(), this )
-        binding.recyclerViewPhotos.adapter = adapter
-        showPhotosByAlbum()
+        showPhoto()
 
     }
 
@@ -44,26 +43,25 @@ class PhotoActivity : AppCompatActivity() {
             showError()
         }
     }*/
-    private fun showPhotosByAlbum(){
+    private fun showPhoto(){
         val bundle : Bundle? = intent.extras
-            val idRetrieved = bundle?.getString("idAlbum")
+            val idRetrieved = bundle?.getString("idPhoto")
             _photos.clear()
-            val photosCall = RetrofitBuilder.apiService.getPhotosByAlbum(idRetrieved)
-            photosCall.enqueue(object : retrofit2.Callback<List<Photo>> {
+            val photoCall = RetrofitBuilder.apiService.getPhotos(idRetrieved)
+            photoCall.enqueue(object : retrofit2.Callback<Photo> {
                 override fun onResponse(
-                    call: Call<List<Photo>>,
-                    response: Response<List<Photo>>
+                    call: Call<Photo>,
+                    response: Response<Photo>
                 ) {
                     Log.println(Log.ASSERT,"",response.body().toString())
                     Log.println(Log.ASSERT,"",idRetrieved.toString())
-
-                    response.body()?.let { _photos.addAll(it) }
-                    adapter = PhotoAdapter(_photos, context)
-                    binding.recyclerViewPhotos.adapter = adapter
-                    adapter.notifyDataSetChanged()
+                    var photo : Photo? = null
+                    response.body()?.let {photo = it}
+                    binding.phTitle.text = photo?.title
+                    Picasso.get().load(photo?.url).into(binding.image)
                 }
 
-                override fun onFailure(call: Call<List<Photo>>, t: Throwable) {
+                override fun onFailure(call: Call<Photo>, t: Throwable) {
                     showError()
                 }
 
